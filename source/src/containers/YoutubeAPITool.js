@@ -1,46 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import YoutubeAPIToolComponent from '../components/YoutubeAPITool'; // UI
+import * as actions from "../actions/action";                       // mapDispatchToProps
 
-import YoutubeAPIToolComponent from '../components/YoutubeAPITool';
+// mapStateToProps
+const mapState = (state) => ({
+    searchCondition: state
+});
 
-function YoutubeAPIToolContainer() {
-    const [searchCondition, setSearchCondition] = useState({
-        part: 'id',
-        channelid: '',
-        channelType: '',
-        eventType: '',
-        maxResults: '',
-        order: '',
-        q: ''
-    })
-    const [searchResult, setSearchResult] = useState('')
-    const handleOnChange = (e) => {
-        setSearchCondition({...searchCondition,[e.target.id]:e.target.value})
-        setSearchResult('')
-    }
-    const handleOnClick = (e) =>{
-        axios.get(
-            'https://www.googleapis.com/youtube/v3/search?' +
-            'key=AIzaSyCavU3u6Ekj1cYjdG0SHsSTmoYqKwKR92E' +
-            '&part=' + searchCondition.part +
-            (searchCondition.channelid != '' ? '&channelid=' + searchCondition.channelid : '') +
-            (searchCondition.channelType != '' ? '&channelType=' + searchCondition.channelType : '') +
-            (searchCondition.eventType != '' ? '&eventType=' + searchCondition.eventType : '') +
-            (searchCondition.maxResults != '' ? '&maxResults=' + searchCondition.maxResults : '') +
-            (searchCondition.order != '' ? '&order=' + searchCondition.order : '') +
-            (searchCondition.q != '' ? '&q=' + searchCondition.q : '')
-            ).then((result) => {
-                setSearchResult(JSON.stringify(result.data, null, 4))
-            }).catch((error) => {
-                setSearchResult(
-                    'エラーコード：' + error.response.data.error.code + 
-                    ' エラーメッセージ：' + error.response.data.error.message
-                )
-            })
-    }
-    return (
-        <YoutubeAPIToolComponent onChange={ handleOnChange } onClick={ handleOnClick } searchResult={ searchResult }></YoutubeAPIToolComponent>
-    );
-}
-
-export default YoutubeAPIToolContainer;
+// connect(mapStateToProps, mapDispatchToProps)(UI)でstateとactionを連結してUIに渡す
+export default connect(mapState, actions)(YoutubeAPIToolComponent);

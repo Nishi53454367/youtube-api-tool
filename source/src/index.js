@@ -2,11 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
-import YoutubeAPITool from './containers/YoutubeAPITool.js';
 import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import YoutubeAPIToolContainer from './containers/YoutubeAPITool';
+import reducer from './reducers/reducer';
+
+// store(reducerによって作成されたstate)作成
+const store = createStore(reducer);
 
 // ReactDOM.render(<App />, document.getElementById('root'));
-ReactDOM.render(<YoutubeAPITool />, document.getElementById('root'));
+ReactDOM.render(
+    // providerを使ってstoreをcontainerに渡す
+    <Provider store={ store }>
+        <YoutubeAPIToolContainer />,
+    </Provider>,
+    document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
