@@ -9,6 +9,10 @@ export const searchConditionOnChange = (e) => ({
 });
 
 // 検索実行
-export const executeSearchOnClick = () => ({
-    type: actionTypes.EXECUTE_SEARCH   
+export const executeSearchOnClick = (searchCondition) => ({
+    type: actionTypes.EXECUTE_SEARCH,
+    searchCondition // payloadに検索条件を設定
 });
+
+// 検索成功：これは不要
+// middlewares(saga)で実施

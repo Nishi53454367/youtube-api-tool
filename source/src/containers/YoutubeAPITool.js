@@ -4,7 +4,7 @@ import * as actions from "../actions/action";                       // mapDispat
 
 // mapStateToProps
 const mapState = (state) => ({
-    searchCondition: state
+    state: state
 });
 
 // connect(mapStateToProps, mapDispatchToProps)(UI)でstateとactionを連結してUIに渡す

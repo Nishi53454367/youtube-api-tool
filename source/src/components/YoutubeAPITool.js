@@ -45,13 +45,18 @@ function YoutubeAPIToolComponent(props) {
             </div>
             <div>
                 入力値<br/>
-                part:{ props.searchCondition.part }<br/>
-                チャンネルID:{ props.searchCondition.channelid }<br/>
-                検索キーワード:{ props.searchCondition.q }<br/>
-                チャンネル種別:{ props.searchCondition.channelType}<br/>
-                ブロードキャストイベント:{ props.searchCondition.eventType}<br/>
-                検索結果取得数:{ props.searchCondition.maxResults}<br/>
-                検索結果表示順:{ props.searchCondition.order}<br/>
+                part:{ props.state.part }<br/>
+                チャンネルID:{ props.state.channelid }<br/>
+                検索キーワード:{ props.state.q }<br/>
+                チャンネル種別:{ props.state.channelType}<br/>
+                ブロードキャストイベント:{ props.state.eventType}<br/>
+                検索結果取得数:{ props.state.maxResults}<br/>
+                検索結果表示順:{ props.state.order}<br/>
+            </div>
+            <div>
+                <button onClick={() => props.executeSearchOnClick(props.state) }>検索実行</button><br/>
+                検索結果<br />
+                { props.state.result }
             </div>
         </div>
     )
