@@ -1,4 +1,4 @@
-import * as actionTypes from '../consts/actionTypes';
+import * as actionTypes from '../consts/YoutubeAPIToolActionType';
 
 // typeとpayload(アクションに必要な任意のデータ)を設定
 

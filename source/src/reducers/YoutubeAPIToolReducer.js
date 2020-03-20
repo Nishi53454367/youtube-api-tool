@@ -1,4 +1,4 @@
-import * as actionTypes from '../consts/actionTypes';
+import * as actionTypes from '../consts/YoutubeAPIToolActionType';
 
 // 現在のstateとactionから新しいstateを作る
 

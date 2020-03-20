@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import YoutubeAPIToolComponent from '../components/YoutubeAPITool'; // UI
-import * as actions from "../actions/action";                       // mapDispatchToProps
+import YoutubeAPIToolComponent from '../components/YoutubeAPIToolComponent';    // UI
+import * as actions from "../actions/YoutubeAPIToolAction";                     // mapDispatchToProps
 
 // mapStateToProps
 const mapState = (state) => ({

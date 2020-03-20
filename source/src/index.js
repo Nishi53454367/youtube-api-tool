@@ -6,8 +6,8 @@ import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import YoutubeAPIToolContainer from './containers/YoutubeAPITool';
-import reducer from './reducers/reducer';
+import YoutubeAPIToolContainer from './containers/YoutubeAPIToolContainer';
+import YoutubeAPIToolReducer from './reducers/YoutubeAPIToolReducer';
 import rootSaga from './middlewares/rootSaga';
 
 // sagaミドルウェアを作成
@@ -15,7 +15,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 // store(reducerによって作成されたstate, sagaミドルウェア)作成
 const store = createStore(
-    reducer,
+    YoutubeAPIToolReducer,
     applyMiddleware(sagaMiddleware)
     );
 

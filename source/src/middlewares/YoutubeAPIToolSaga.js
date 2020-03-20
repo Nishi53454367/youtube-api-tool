@@ -1,4 +1,4 @@
-import * as actionTypes from '../consts/actionTypes';
+import * as actionTypes from '../consts/YoutubeAPIToolActionType';
 import { put, call, takeEvery } from 'redux-saga/effects';
 import getYoutubeMovieInfoList from '../utils/api';
 
