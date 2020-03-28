@@ -1,11 +1,13 @@
-import { connect } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import YoutubeAPIToolComponent from '../components/YoutubeAPIToolComponent';    // UI
-import * as actions from "../actions/YoutubeAPIToolAction";                     // mapDispatchToProps
 
-// mapStateToProps
-const mapState = (state) => ({
-    state: state
-});
+const mapState = state => state;
 
-// connect(mapStateToProps, mapDispatchToProps)(UI)でstateとactionを連結してUIに渡す
-export default connect(mapState, actions)(YoutubeAPIToolComponent);
+export default function YoutubeAPIToolContainer() {
+    const state = useSelector(mapState);
+    const dispatch = useDispatch();
+    return (
+        <YoutubeAPIToolComponent state={state} dispatch={dispatch}/>
+    );
+};
