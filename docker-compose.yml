@@ -5,7 +5,7 @@ services:
       context: .
     tty: true
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     volumes:
     - ./source:/usr/src/app/
     command: sh -c "yarn start"
