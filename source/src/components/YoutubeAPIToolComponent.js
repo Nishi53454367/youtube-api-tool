@@ -1,65 +1,64 @@
 import React from 'react';
-import * as actions from "../actions/YoutubeAPIToolAction";
+import * as actions from '../actions/YoutubeAPIToolAction';
+import defalutTheme from './theme/defaultTheme';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
+import {ThemeProvider, Container, Card, Typography, FormLabel, FormControlLabel, RadioGroup, Radio, TextField, Select, MenuItem, Button} from '@material-ui/core';
 
 function YoutubeAPIToolComponent({state, dispatch}) {
     return (
-        <div style={{textAlign: "center"}}>
+        <ThemeProvider theme={defalutTheme}>
+            <Container maxWidth="md">
+                <Typography variant="h5" color="secondary"><YouTubeIcon fontSize="large"/>YouTube API Tool</Typography>
+                <Card>
+                    <FormLabel>Part</FormLabel>
+                    <RadioGroup row={true}>
+                        <FormControlLabel label="id" value="id" control={<Radio name="part" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="snippet" value="snippet" control={<Radio name="part" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    </RadioGroup>
+                    <FormLabel>チャンネルID</FormLabel>
+                    <TextField name="channelid" variant="outlined" color="secondary" placeholder="チャンネルIDを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))} />
+                    <FormLabel>検索キーワード</FormLabel>
+                    <TextField name="q" variant="outlined" color="secondary" placeholder="キーワードを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))} />
+                    <FormLabel>チャンネル種別</FormLabel>
+                    <RadioGroup row={true}>
+                        <FormControlLabel label="全チャンネル" value="any" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="番組のみ" value="show" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    </RadioGroup>
+                    <FormLabel>ブロードキャストイベント</FormLabel>
+                    <RadioGroup row={true}>
+                        <FormControlLabel label="完了" value="completed" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="ライブ" value="live" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="配信予定" value="upcoming" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    </RadioGroup>
+                    <FormLabel>検索結果取得数</FormLabel>
+                    <Select value={state.maxResults} name="maxResults" variant="outlined" color="secondary" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}>
+                        {(()=>{
+                            const menuItem = [];
+                            menuItem.push(<MenuItem key={0} value=''> </MenuItem>);
+                            for(let i=1; i<51; i++){
+                                menuItem.push(<MenuItem key={i} value={i}>{i}</MenuItem>);
+                            }
+                            return menuItem;
+                        })()}
+                    </Select>
+                    <FormLabel>検索結果表示順</FormLabel>
+                    <RadioGroup row={true}>
+                        <FormControlLabel label="作成日の新しい順" value="date" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="評価の高い順" value="rating" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="関連順" value="relevance" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="タイトル順" value="title" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="動画の番号順(降順)" value="videoCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel label="再生回数の多い順" value="viewCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    </RadioGroup>
+                    <Button startIcon={<YoutubeSearchedForIcon />} variant="contained" color="secondary" size="large" fullWidth onClick={() => dispatch(actions.executeSearchOnClick(state))}>検索</Button>
+                </Card>
             <div>
-                必須パラメータ<br/>
-                part：
-                <input id="part" type="radio" name="part" value="id" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>id
-                &nbsp;
-                <input id="part" type="radio" name="part" value="snippet" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>snippet
-            </div>
-            <div>
-                任意パラメータ<br/>
-                チャンネルID：<input id="channelid" type="text" placeholder="チャンネルIDを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}></input>
-                <br/>
-                検索キーワード：<input id="q" type="text" placeholder="キーワードを入力して下さい" onChange={ (event) => dispatch(actions.searchConditionOnChange(event))}></input>
-                <br/>
-                チャンネル種別：
-                <input id="channelType" type="radio" name="channelType" value="any" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>全チャンネル
-                &nbsp;
-                <input id="channelType" type="radio" name="channelType" value="show" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>番組のみ
-                <br/>
-                ブロードキャストイベント：
-                <input id="eventType" type="radio" name="eventType" value="completed" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>完了
-                &nbsp;
-                <input id="eventType" type="radio" name="eventType" value="live" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>ライブ
-                &nbsp;
-                <input id="eventType" type="radio" name="eventType" value="upcoming" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>配信予定
-                <br/>
-                検索結果取得数：<input id="maxResults" type="text" placeholder="0〜50までを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}></input>
-                <br/>
-                検索結果表示順：
-                <input id="order" type="radio" name="order" value="date" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>作成日の新しい順
-                &nbsp;
-                <input id="order" type="radio" name="order" value="rating" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>評価の高い順
-                &nbsp;
-                <input id="order" type="radio" name="order" value="relevance" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>関連順
-                &nbsp;
-                <input id="order" type="radio" name="order" value="title" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>タイトル順
-                &nbsp;
-                <input id="order" type="radio" name="order" value="videoCount" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>動画の番号順(降順)
-                &nbsp;
-                <input id="order" type="radio" name="order" value="viewCount" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>再生回数の多い順
-            </div>
-            <div>
-                入力値<br/>
-                part:{ state.part }<br/>
-                チャンネルID:{ state.channelid }<br/>
-                検索キーワード:{ state.q }<br/>
-                チャンネル種別:{ state.channelType}<br/>
-                ブロードキャストイベント:{ state.eventType}<br/>
-                検索結果取得数:{ state.maxResults}<br/>
-                検索結果表示順:{ state.order}<br/>
-            </div>
-            <div>
-                <button onClick={() => dispatch(actions.executeSearchOnClick(state))}>検索実行</button><br/>
                 検索結果<br />
                 { state.result }
             </div>
-        </div>
+            </Container>
+        </ThemeProvider>
     )
 }
 

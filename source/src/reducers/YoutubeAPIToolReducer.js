@@ -20,7 +20,7 @@ const reducer = (state = initValue, action) => {
         // 検索条件入力
         case actionTypes.INPUT_SEARCH_CONDITION:
             // 変更があった項目を更新して返す
-            return {...state, [action.e.target.id]:action.e.target.value};
+            return {...state, [action.e.target.name]:action.e.target.value};
 
         // 検索実行：これは不要
         // middlewares(saga)で実施
