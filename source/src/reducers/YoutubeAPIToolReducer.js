@@ -15,7 +15,10 @@ const initValue = {
     eventType: '',
     maxResults: 5,
     order: 'relevance',
-    result: ''
+    result: '',
+    playOption: {
+        autoPlay: false,
+    }
 };
 
 // 各アクション処理
@@ -39,6 +42,9 @@ const reducer = (state = initValue, action) => {
         case actionTypes.SEARCH_SUCCSES:
             // 検索結果をセットして返す
             return {...state, result: action.result};
+        // 動画オプション変更
+        case actionTypes.MOVIE_OPTION_CHANGE:
+            return {...state, playOption: {...state.playOption, [action.e.target.name]: action.e.target.checked}};
         default:
             // 今の状態を返す
             return state;

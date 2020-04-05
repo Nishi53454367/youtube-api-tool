@@ -3,9 +3,45 @@ import * as actions from '../actions/YoutubeAPIToolAction';
 import defalutTheme from './theme/defaultTheme';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
-import {ThemeProvider, Container, Card, Typography, FormLabel, FormControlLabel, TextField, Checkbox, RadioGroup, Radio, Select, MenuItem, Button} from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import {ThemeProvider, Grid, Container, Card, CardContent, CardActions, Typography, FormLabel, FormControlLabel, TextField, Checkbox, RadioGroup, Radio, Select, MenuItem, Switch, Button, FormGroup} from '@material-ui/core';
+import YouTube from 'react-youtube';
 
 function YoutubeAPIToolComponent({state, dispatch}) {
+    const showSearchResult = () => {
+        if(state.result != '') {
+            const autoPlay = state.playOption.autoPlay ? 1 : 0;
+            let opts = {
+                height: '240',
+                width: '360',
+                playerVars: {
+                    autoplay: autoPlay,
+                },
+            }
+            if(state.result.items.length != 0) {
+                return (
+                    <Card>
+                        <Grid container justify="center">
+                            {state.result.items.map(
+                                (data, index)=>(
+                                    <Grid item>
+                                        <Card style={{padding: 0}}>
+                                            <CardContent style={{padding: 0}}>
+                                                <YouTube videoId={data.id.videoId} opts={opts}/>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button startIcon={<DeleteOutlineIcon />} variant="outlined" color="secondary" size="small" fullWidth>削除</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                )
+                            )}
+                        </Grid>
+                    </Card>
+                );
+            }
+        }
+    }
     return (
         <ThemeProvider theme={defalutTheme}>
             <Container maxWidth="md">
@@ -50,12 +86,15 @@ function YoutubeAPIToolComponent({state, dispatch}) {
                         <FormControlLabel label="動画の番号順(降順)" value="videoCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="再生回数の多い順" value="viewCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                     </RadioGroup>
+                    <FormLabel>再生オプション</FormLabel>
+                    <FormGroup row={true}>
+                        <FormControlLabel checked={state.playOption.autoPlay} control={<Switch name="autoPlay" />} label="自動再生" onChange={(event) => dispatch(actions.movieOptionOnChange(event))}/>
+                    </FormGroup>
                     <Button startIcon={<YoutubeSearchedForIcon />} variant="contained" color="secondary" size="large" fullWidth onClick={() => dispatch(actions.executeSearchOnClick(state))}>検索</Button>
                 </Card>
-            <div>
-                検索結果<br />
-                { state.result }
-            </div>
+            </Container>
+            <Container maxWidth="lg">
+                {showSearchResult()}
             </Container>
         </ThemeProvider>
     )

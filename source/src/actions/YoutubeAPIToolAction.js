@@ -14,5 +14,11 @@ export const executeSearchOnClick = (searchCondition) => ({
     searchCondition // payloadに検索条件を設定
 });
 
+// 再生オプション変更
+export const movieOptionOnChange = (e) => ({
+    type: actionTypes.MOVIE_OPTION_CHANGE,
+    e   // payloadにイベントオブジェクトを設定    
+});
+
 // 検索成功：これは不要
 // middlewares(saga)で実施

@@ -4,7 +4,7 @@ export function getAPI(url) {
     return axios.get(
         url
     ).then((result) => {
-        return JSON.stringify(result.data);
+        return result.data;
     }).catch((error) => {
         return (
             'errorCode:' + error.response.data.error.code +
