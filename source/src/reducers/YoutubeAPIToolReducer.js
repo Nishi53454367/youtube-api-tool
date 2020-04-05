@@ -4,13 +4,17 @@ import * as actionTypes from '../consts/YoutubeAPIToolActionType';
 
 // 初期値
 const initValue = {
-    part: 'id',
     channelid: '',
+    q: '',
+    type: {
+        channel: true,
+        playlist: true,
+        video: true,
+    },
     channelType: '',
     eventType: '',
-    maxResults: '',
-    order: '',
-    q: '',
+    maxResults: 5,
+    order: 'relevance',
     result: ''
 };
 
@@ -20,7 +24,13 @@ const reducer = (state = initValue, action) => {
         // 検索条件入力
         case actionTypes.INPUT_SEARCH_CONDITION:
             // 変更があった項目を更新して返す
-            return {...state, [action.e.target.name]:action.e.target.value};
+            if(action.e.target.name === "type") {
+                const typeName = action.e.target.value;
+                const value = !state.type[typeName];
+                return {...state, type: {...state.type, [action.e.target.value]: value}};
+            } else {
+                return {...state, [action.e.target.name]: action.e.target.value};
+            }
 
         // 検索実行：これは不要
         // middlewares(saga)で実施

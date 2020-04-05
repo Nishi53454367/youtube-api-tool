@@ -3,7 +3,7 @@ import * as actions from '../actions/YoutubeAPIToolAction';
 import defalutTheme from './theme/defaultTheme';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
-import {ThemeProvider, Container, Card, Typography, FormLabel, FormControlLabel, RadioGroup, Radio, TextField, Select, MenuItem, Button} from '@material-ui/core';
+import {ThemeProvider, Container, Card, Typography, FormLabel, FormControlLabel, TextField, Checkbox, RadioGroup, Radio, Select, MenuItem, Button} from '@material-ui/core';
 
 function YoutubeAPIToolComponent({state, dispatch}) {
     return (
@@ -11,15 +11,14 @@ function YoutubeAPIToolComponent({state, dispatch}) {
             <Container maxWidth="md">
                 <Typography variant="h5" color="secondary"><YouTubeIcon fontSize="large"/>YouTube API Tool</Typography>
                 <Card>
-                    <FormLabel>Part</FormLabel>
-                    <RadioGroup row={true}>
-                        <FormControlLabel label="id" value="id" control={<Radio name="part" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                        <FormControlLabel label="snippet" value="snippet" control={<Radio name="part" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                    </RadioGroup>
                     <FormLabel>チャンネルID</FormLabel>
                     <TextField name="channelid" variant="outlined" color="secondary" placeholder="チャンネルIDを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))} />
                     <FormLabel>検索キーワード</FormLabel>
-                    <TextField name="q" variant="outlined" color="secondary" placeholder="キーワードを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))} />
+                    <TextField name="q" variant="outlined" color="secondary" placeholder="検索キーワードを入力して下さい" onChange={(event) => dispatch(actions.searchConditionOnChange(event))} />
+                    <FormLabel>検索対象</FormLabel>
+                    <FormControlLabel label="チャンネル" value="channel" control={<Checkbox name="type" checked={state.type.channel} onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    <FormControlLabel label="プレイリスト" value="playlist" control={<Checkbox name="type" checked={state.type.playlist} onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                    <FormControlLabel label="ビデオ" value="video" control={<Checkbox name="type" checked={state.type.video} onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                     <FormLabel>チャンネル種別</FormLabel>
                     <RadioGroup row={true}>
                         <FormControlLabel label="全チャンネル" value="any" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
@@ -43,10 +42,10 @@ function YoutubeAPIToolComponent({state, dispatch}) {
                         })()}
                     </Select>
                     <FormLabel>検索結果表示順</FormLabel>
-                    <RadioGroup row={true}>
+                    <RadioGroup value={state.order} row={true}>
+                        <FormControlLabel label="関連順" value="relevance" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="作成日の新しい順" value="date" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="評価の高い順" value="rating" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                        <FormControlLabel label="関連順" value="relevance" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="タイトル順" value="title" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="動画の番号順(降順)" value="videoCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                         <FormControlLabel label="再生回数の多い順" value="viewCount" control={<Radio name="order" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>

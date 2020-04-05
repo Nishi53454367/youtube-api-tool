@@ -18,6 +18,11 @@ const defaultTheme = createMuiTheme({
                 verticalAlign: "middle"
             }
         },
+        MuiCheckbox: {
+            root: {
+                margin: 8
+            }
+        },
         MuiFormGroup: {
             root: {
                 margin: 8
