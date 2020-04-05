@@ -21,14 +21,14 @@ function YoutubeAPIToolComponent({state, dispatch}) {
                     <FormControlLabel label="ビデオ" value="video" control={<Checkbox name="type" checked={state.type.video} onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                     <FormLabel>チャンネル種別</FormLabel>
                     <RadioGroup row={true}>
-                        <FormControlLabel label="全チャンネル" value="any" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                        <FormControlLabel label="番組のみ" value="show" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel disabled={!(state.type.channel && (!state.type.playlist && !state.type.video))} label="全チャンネル" value="any" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel disabled={!(state.type.channel && (!state.type.playlist && !state.type.video))} label="番組のみ" value="show" control={<Radio name="channelType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                     </RadioGroup>
                     <FormLabel>ブロードキャストイベント</FormLabel>
                     <RadioGroup row={true}>
-                        <FormControlLabel label="完了" value="completed" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                        <FormControlLabel label="ライブ" value="live" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
-                        <FormControlLabel label="配信予定" value="upcoming" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel disabled={!(state.type.video && (!state.type.playlist && !state.type.channel))} label="完了" value="completed" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel disabled={!(state.type.video && (!state.type.playlist && !state.type.channel))} label="ライブ" value="live" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
+                        <FormControlLabel disabled={!(state.type.video && (!state.type.playlist && !state.type.channel))} label="配信予定" value="upcoming" control={<Radio name="eventType" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}/>}/>
                     </RadioGroup>
                     <FormLabel>検索結果取得数</FormLabel>
                     <Select value={state.maxResults} name="maxResults" variant="outlined" color="secondary" onChange={(event) => dispatch(actions.searchConditionOnChange(event))}>
