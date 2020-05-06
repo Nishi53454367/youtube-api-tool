@@ -30,7 +30,7 @@ React + Redux + Material-UIで開発しています。
 
 ## 接続
 
-`localhost:3000`
+`http://localhost:3000`
 
 ## 参考：プロジェクト新規作成時コマンド
 
