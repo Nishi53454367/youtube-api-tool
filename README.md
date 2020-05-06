@@ -1,15 +1,43 @@
-# youtubeAPITool
+## このプロジェクトについて
+YoutubeAPIを利用して動画の検索、視聴ができます。  
+React + Redux + Material-UIで開発しています。
 
-## プロジェクト新規作成時
+## バージョン情報
+||  バージョン  |
+| ---- | ---- |
+|  React  |  16.12.0  |
+|  Redux  |  4.0.5  |
 
-1. `docker-compose build`
+## 起動手順
 
-2. `docker-compose run --rm node sh -c 'cd /usr/src && create-react-app app'`
+1. コンテナビルド
 
-## コンテナ起動
+    ```
+    docker-compose build
+    ```
 
-`docker-compose up -d`
+2. node_modulesインストール
+
+    ```
+    docker-compose run node yarn install
+    ```
+
+3. コンテナ起動
+
+    ```
+    docker-compose up -d
+    ```
 
 ## 接続
 
 `localhost:3000`
+
+## 参考：プロジェクト新規作成時コマンド
+
+```
+docker-compose build
+```
+
+```
+docker-compose run --rm node sh -c 'cd /usr/src && create-react-app app'
+```
