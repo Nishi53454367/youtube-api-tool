@@ -6,17 +6,17 @@ import * as api from '../utils/api';
 function* getYoutubeMovieInfoList(action) {
     // typeパラメータ作成
     let type = '&type=';
-    if(action.searchCondition.type.channel) {
+    if (action.searchCondition.type.channel) {
         type += 'channel,'
     }
-    if(action.searchCondition.type.playlist) {
+    if (action.searchCondition.type.playlist) {
         type += 'playlist,'
     }
-    if(action.searchCondition.type.video) {
+    if (action.searchCondition.type.video) {
         type += 'video,'
     }
     // URL作成
-    let url = YoutubeAPIToolURL.YOUTUBE_SEARCH_API + 
+    let url = YoutubeAPIToolURL.YOUTUBE_SEARCH_API +
         process.env.REACT_APP_YOUTUBE_API_KEY +
         '&part=snippet' +
         (action.searchCondition.channelid != '' ? '&channelId=' + action.searchCondition.channelid : '') +
@@ -27,8 +27,8 @@ function* getYoutubeMovieInfoList(action) {
         (action.searchCondition.maxResults != '' ? '&maxResults=' + action.searchCondition.maxResults : '') +
         (action.searchCondition.order != '' ? '&order=' + action.searchCondition.order : '')
 
-    // call関数を使用してapi.getAPIを実行して完了するまで待つ
-    let result = yield call(api.getAPI, url);
+    // call関数を使用してapiをcallして完了するまで待つ
+    let result = yield call(api.getRequest, url);
 
     // put関数を使用してactionをdispatch
     yield put({

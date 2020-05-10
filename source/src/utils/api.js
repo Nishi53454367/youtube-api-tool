@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function getAPI(url) {
+export function getRequest(url) {
     return axios.get(
         url
     ).then((result) => {

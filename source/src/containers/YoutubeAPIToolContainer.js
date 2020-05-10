@@ -8,6 +8,6 @@ export default function YoutubeAPIToolContainer() {
     const state = useSelector(mapState);
     const dispatch = useDispatch();
     return (
-        <YoutubeAPIToolComponent state={state} dispatch={dispatch}/>
+        <YoutubeAPIToolComponent state={state} dispatch={dispatch} />
     );
 };
