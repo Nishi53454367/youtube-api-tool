@@ -24,6 +24,8 @@ React + Redux + Material-UIで開発しています。
 
 3. envファイル作成
 
+    sourceディレクトリへ移動
+
     ```
     cp .env.example .env
     ```
