@@ -29,10 +29,16 @@ function* getYoutubeMovieInfoList(action) {
 
     // call関数を使用してapiをcallして完了するまで待つ
     let result = yield call(api.getRequest, url);
+    let actionType = actionTypes.SEARCH_SUCCSES;
+
+    // エラーの場合
+    if (result.responseCode !== 200) {
+        actionType = actionTypes.SEARCH_FAILED;
+    }
 
     // put関数を使用してactionをdispatch
     yield put({
-        type: actionTypes.SEARCH_SUCCSES, result: result
+        type: actionType, result: result.data
     });
 }
 

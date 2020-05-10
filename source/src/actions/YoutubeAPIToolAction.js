@@ -14,11 +14,15 @@ export const executeSearchOnClick = (searchCondition) => ({
     searchCondition // payloadに検索条件を設定
 });
 
+// 検索成功、検索失敗は、middlewares(saga)で定義
+
+// 再検索
+export const reSearch = () => ({
+    type: actionTypes.RE_SEARCH
+});
+
 // 再生オプション変更
 export const movieOptionOnChange = (e) => ({
     type: actionTypes.MOVIE_OPTION_CHANGE,
     e   // payloadにイベントオブジェクトを設定    
 });
-
-// 検索成功：これは不要
-// middlewares(saga)で実施

@@ -1,49 +1,16 @@
 import React from 'react';
 import * as actions from '../actions/YoutubeAPIToolAction';
-import defalutTheme from './theme/defaultTheme';
+import * as resultStatusType from '../consts/YoutubeAPIToolResultStatusType';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { ThemeProvider, Grid, Container, Card, CardContent, CardActions, Typography, FormLabel, FormControlLabel, TextField, Checkbox, RadioGroup, Radio, Select, MenuItem, Switch, Button, FormGroup } from '@material-ui/core';
+import { Grid, Container, Card, CardContent, CardActions, Typography, FormLabel, FormControlLabel, TextField, Checkbox, RadioGroup, Radio, Select, MenuItem, Switch, Button, FormGroup, Link } from '@material-ui/core';
 import YouTube from 'react-youtube';
 
 function YoutubeAPIToolComponent({ state, dispatch }) {
-    const showSearchResult = () => {
-        if (state.result != '') {
-            const autoPlay = state.playOption.autoPlay ? 1 : 0;
-            let opts = {
-                height: '240',
-                width: '360',
-                playerVars: {
-                    autoplay: autoPlay,
-                },
-            }
-            if (state.result.items.length != 0) {
-                return (
-                    <Card>
-                        <Grid container justify="center">
-                            {state.result.items.map(
-                                (data, index) => (
-                                    <Grid item>
-                                        <Card style={{ padding: 0 }}>
-                                            <CardContent style={{ padding: 0 }}>
-                                                <YouTube videoId={data.id.videoId} opts={opts} />
-                                            </CardContent>
-                                            <CardActions>
-                                                <Button startIcon={<DeleteOutlineIcon />} variant="outlined" color="secondary" size="small" fullWidth>削除</Button>
-                                            </CardActions>
-                                        </Card>
-                                    </Grid>
-                                )
-                            )}
-                        </Grid>
-                    </Card>
-                );
-            }
-        }
-    }
-    return (
-        <ThemeProvider theme={defalutTheme}>
+    // 検索条件入力画面のレンダリング
+    const searchConditionRender = () => {
+        return (
             <Container maxWidth="md">
                 <Typography variant="h5" color="secondary"><YouTubeIcon fontSize="large" />YouTubeAPIで動画検索ツール</Typography>
                 <Card>
@@ -93,11 +60,72 @@ function YoutubeAPIToolComponent({ state, dispatch }) {
                     <Button startIcon={<YoutubeSearchedForIcon />} variant="contained" color="secondary" size="large" fullWidth onClick={() => dispatch(actions.executeSearchOnClick(state))}>検索</Button>
                 </Card>
             </Container>
-            <Container maxWidth="lg">
-                {showSearchResult()}
+        )
+    }
+    // 検索結果成功時のレンダリング
+    const searchResultSuccessRender = () => {
+        const autoPlay = state.playOption.autoPlay ? 1 : 0;
+        let opts = {
+            height: '240',
+            width: '360',
+            playerVars: {
+                autoplay: autoPlay,
+            },
+        }
+        if (state.result.items.length !== 0) {
+            return (
+                <Container maxWidth="lg">
+                    <Card>
+                        <Link href="#" onClick={() => dispatch(actions.reSearch())}><Typography variant="h5">検索入力に戻る</Typography></Link>
+                        <Grid container justify="center">
+                            {state.result.items.map(
+                                (data, index) => (
+                                    <Grid item>
+                                        <Card style={{ padding: 0 }}>
+                                            <CardContent style={{ padding: 0 }}>
+                                                <YouTube videoId={data.id.videoId} opts={opts} />
+                                            </CardContent>
+                                            <CardActions>
+                                                <Button startIcon={<DeleteOutlineIcon />} variant="outlined" color="secondary" size="small" fullWidth>削除</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                )
+                            )}
+                        </Grid>
+                    </Card>
+                </Container>
+            );
+        } else {
+            return (
+                <Container maxWidth="sm">
+                    <Typography variant="h5" color="secondary">検索結果が0件でした</Typography>
+                    <Link href="#" onClick={() => dispatch(actions.reSearch())}><Typography variant="h5">検索入力に戻る</Typography></Link>
+                </Container>
+            );
+        }
+    }
+    // 検索結果失敗時のレンダリング
+    const searchResultFailedRender = () => {
+        return (
+            <Container maxWidth="sm">
+                <Typography variant="h5" color="secondary">エラーが発生しました</Typography>
+                <Typography variant="subtitle1" color="secondary">エラーメッセージ：{state.errorMessage}</Typography>
+                <Link href="#" onClick={() => dispatch(actions.reSearch())}><Typography variant="h5">検索入力に戻る</Typography></Link>
             </Container>
-        </ThemeProvider>
-    )
+        )
+    }
+    // 検索結果ステータスによって描画内容を変更
+    switch (state.resultStatus) {
+        case resultStatusType.UNSEARCHED:           // 未検索状態は、検索条件入力画面
+            return searchConditionRender();
+        case resultStatusType.SUCCESS:
+            return searchResultSuccessRender();     // 検索成功時は、検索結果表示画面
+        case resultStatusType.FAILED:
+            return searchResultFailedRender();      // 検索失敗時は、エラー画面
+        default:
+            return searchConditionRender();
+    }
 }
 
 export default YoutubeAPIToolComponent
