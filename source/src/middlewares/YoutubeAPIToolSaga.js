@@ -19,13 +19,13 @@ function* getYoutubeMovieInfoList(action) {
     let url = YoutubeAPIToolURL.YOUTUBE_SEARCH_API +
         process.env.REACT_APP_YOUTUBE_API_KEY +
         '&part=snippet' +
-        (action.searchCondition.channelid != '' ? '&channelId=' + action.searchCondition.channelid : '') +
-        (action.searchCondition.q != '' ? '&q=' + action.searchCondition.q : '') +
-        (type != '&type=' ? type : '') +
-        (action.searchCondition.channelType != '' ? '&channelType=' + action.searchCondition.channelType : '') +
-        (action.searchCondition.eventType != '' ? '&eventType=' + action.searchCondition.eventType : '') +
-        (action.searchCondition.maxResults != '' ? '&maxResults=' + action.searchCondition.maxResults : '') +
-        (action.searchCondition.order != '' ? '&order=' + action.searchCondition.order : '')
+        (action.searchCondition.channelid !== '' ? '&channelId=' + action.searchCondition.channelid : '') +
+        (action.searchCondition.q !== '' ? '&q=' + action.searchCondition.q : '') +
+        (type !== '&type=' ? type : '') +
+        (action.searchCondition.channelType !== '' ? '&channelType=' + action.searchCondition.channelType : '') +
+        (action.searchCondition.eventType !== '' ? '&eventType=' + action.searchCondition.eventType : '') +
+        (action.searchCondition.maxResults !== '' ? '&maxResults=' + action.searchCondition.maxResults : '') +
+        (action.searchCondition.order !== '' ? '&order=' + action.searchCondition.order : '')
 
     // call関数を使用してapiをcallして完了するまで待つ
     let result = yield call(api.getRequest, url);

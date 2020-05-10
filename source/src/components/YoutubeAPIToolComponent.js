@@ -80,7 +80,7 @@ function YoutubeAPIToolComponent({ state, dispatch }) {
                         <Grid container justify="center">
                             {state.result.items.map(
                                 (data, index) => (
-                                    <Grid item>
+                                    <Grid item key={index}>
                                         <Card style={{ padding: 0 }}>
                                             <CardContent style={{ padding: 0 }}>
                                                 <YouTube videoId={data.id.videoId} opts={opts} />
