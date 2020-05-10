@@ -22,7 +22,15 @@ React + Redux + Material-UIで開発しています。
     docker-compose run node yarn install
     ```
 
-3. コンテナ起動
+3. envファイル作成
+
+    ```
+    cp .env.example .env
+    ```
+
+    値は適宜修正
+
+4. コンテナ起動
 
     ```
     docker-compose up -d
