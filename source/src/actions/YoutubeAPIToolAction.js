@@ -26,3 +26,13 @@ export const movieOptionOnChange = (e) => ({
     type: actionTypes.MOVIE_OPTION_CHANGE,
     e   // payloadにイベントオブジェクトを設定    
 });
+
+// 違う動画読み込み
+export const reloadMovie = (searchCondition, nextPageToken, index) => ({
+    type: actionTypes.RELOAD_MOVIE,
+    searchCondition, // payloadに検索条件を設定
+    nextPageToken,   // payloadに次ページ検索用トークンを設定
+    index            // payloadに差し替え動画のindexを設定
+});
+
+// 違う動画読み込み成功は、middlewares(saga)で定義
