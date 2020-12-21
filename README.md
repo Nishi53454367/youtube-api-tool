@@ -1,6 +1,6 @@
 ## このプロジェクトについて
-YoutubeAPIを利用して動画の検索、視聴ができます。  
-React + Redux + Material-UIで開発しています。
+YouTube Data API v3を利用して動画の検索、視聴ができます。  
+React(JavaScript使用) + Redux + Material-UIで開発しています。
 
 ## バージョン情報
 ||  バージョン  |
@@ -30,7 +30,7 @@ React + Redux + Material-UIで開発しています。
     cp .env.example .env
     ```
 
-    値は適宜修正
+    GCPでYouTube Data API v3を有効にしてAPIキーを.envに設定
 
 4. コンテナ起動
 
@@ -42,7 +42,7 @@ React + Redux + Material-UIで開発しています。
 
 `http://localhost:3000`
 
-## 参考：プロジェクト新規作成時コマンド
+## 備忘録：プロジェクト新規作成時コマンド
 
 ```
 docker-compose build
