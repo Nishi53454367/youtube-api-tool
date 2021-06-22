@@ -32,7 +32,7 @@ docker-compose up -d
 ```
 
 ## 画面起動
-`http://localhost:3000`
+http://localhost:3000
 
 # 備忘録: アプリ新規作成手順
 
